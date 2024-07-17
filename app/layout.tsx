@@ -1,14 +1,13 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { UserContextProvider } from "@/context/UserContext";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const url = process.env.VERCEL_URL || "http://localhost:3000";
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  metadataBase: new URL(url),
+  title: "Talking Meme",
+  description: "Sould out your meme! Add or pick a meme, write your text, and AI do the rest.",
 };
 
 export default function RootLayout({
@@ -18,10 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
+      <body className="font-sans px-4 bg-[var(--bg-color)] w-full">
+        <UserContextProvider>
+          <main className="min-h-screen flex flex-col items-center">
+            {children}
+          </main>
+        </UserContextProvider>
       </body>
     </html>
   );
